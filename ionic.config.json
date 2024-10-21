@@ -1,0 +1,7 @@
+{
+  "name": "gestion-ticket-treetronix",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
