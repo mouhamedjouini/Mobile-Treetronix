@@ -1,0 +1,97 @@
+<ion-content class="ion-padding">
+  <section class="add-reclamation section">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+          <div class="form-head">
+            <h4 class="title ion-text-center">Ajouter Réclamation</h4>
+            <p class="ion-text-center">Veuillez remplir les informations ci-dessous pour soumettre votre réclamation.</p>
+            <form (ngSubmit)="ajouter()" #reclamationForm="ngForm" novalidate>
+
+              <!-- Informations personnelles -->
+            
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Nom*</ion-label>
+                <ion-input
+                  [(ngModel)]="reclamation.name"
+                  name="name"
+                  type="text"
+                  required
+                  minlength="3"
+                  #name="ngModel"
+                  clearInput
+                  debounce="300">
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <small *ngIf="name.errors?.['required']">Le nom est requis.</small>
+                <small *ngIf="name.errors?.['minlength']">Le nom doit comporter au moins 3 caractères.</small>
+              </ion-text>
+
+              <!-- Détails de la réclamation -->
+             
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Série*</ion-label>
+                <ion-input
+                  [(ngModel)]="reclamation.Serie"
+                  name="Serie"
+                  type="number"
+                  required
+                  min="1"
+                  #Serie="ngModel"
+                  clearInput
+                  debounce="300">
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger" *ngIf="Serie.invalid && (Serie.dirty || Serie.touched)">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <small *ngIf="Serie.errors?.['required']">La série est requise.</small>
+                <small *ngIf="Serie.errors?.['min']">Le numéro de série doit être supérieur à 0.</small>
+              </ion-text>
+
+              <!-- Type de Réclamation -->
+              <ion-item class="ion-margin-bottom">
+                <ion-label>Type de Réclamation*</ion-label>
+                <ion-select [(ngModel)]="reclamation.typereclamation" name="typereclamation" required>
+                  <ion-select-option *ngFor="let option of TypeReclamationOptions" [value]="option">{{ option }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <!-- Upload Fichier -->
+             
+              <ion-item class="ion-margin-bottom">
+          
+                <ion-input (ionChange)="selectedImage($event)" type="file" accept=".jpg,.png,.pdf"></ion-input>
+              </ion-item>
+
+              <!-- Description -->
+    
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Description*</ion-label>
+                <ion-textarea
+                  [(ngModel)]="reclamation.description"
+                  name="description"
+                  required
+                  minlength="10"
+                  rows="4"></ion-textarea>
+              </ion-item>
+              <!-- <ion-text color="danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <small *ngIf="description.errors?.['required']">La description est requise.</small>
+                <small *ngIf="description.errors?.['minlength']">La description doit comporter au moins 10 caractères.</small>
+              </ion-text> -->
+
+              <!-- Submit Button -->
+              <ion-button expand="block" type="submit" color="primary" shape="round" class="ion-margin-top" [disabled]="reclamationForm.invalid">
+                 <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+                <span *ngIf="!isLoading">Ajouter Réclamation</span> 
+              </ion-button>
+
+            </form>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>

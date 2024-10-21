@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title> Our Claims </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon
+        slot="icon-only"
+        routerLink="/add-rec"
+        name="add-circle-outline"
+      ></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="selectedStatus" color="primary">
+    <ion-segment-button value="ALL" (click)="filterByStatus('ALL')">
+      Tout <ion-badge>{{ reclamations.length }}</ion-badge>
+    </ion-segment-button>
+    <ion-segment-button value="APPROVED" (click)="filterByStatus('APPROVED')">
+      Approuvé <ion-badge>{{ approvedCount }}</ion-badge>
+    </ion-segment-button>
+    <ion-segment-button value="PENDING" (click)="filterByStatus('PENDING')">
+      En attente <ion-badge>{{ pendingCount }}</ion-badge>
+    </ion-segment-button>
+    <ion-segment-button value="REJECTED" (click)="filterByStatus('REJECTED')">
+      Rejeté <ion-badge>{{ rejectedCount }}</ion-badge>
+    </ion-segment-button>
+    <ion-segment-button value="RESOLVED" (click)="filterByStatus('RESOLVED')">
+      Résolu <ion-badge>{{ resolvedCount }}</ion-badge>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list>
+    <ion-item *ngFor="let reclamation of filteredReclamations">
+      <ion-label>
+        <h2>{{ reclamation.name }} ({{ reclamation.user.username }})</h2>
+        <p>Série: {{ reclamation.Serie }}</p>
+        <p>{{ reclamation.description }}</p>
+        <p>Type: {{ reclamation.typereclamation }}</p>
+        <p>Status: 
+          <ion-badge [color]="getStatusClass(reclamation.status)">
+            {{ reclamation.status }}
+          </ion-badge>
+        </p>
+      </ion-label>
+      <ion-button fill="clear" color="primary" [routerLink]="['/dashboardAdmin/details-rec', reclamation._id]">
+        <ion-icon name="eye-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="danger" (click)="deleteReclamation(reclamation._id)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="secondary" [href]="url + '/getimage/' + reclamation.piecejointe" target="_blank">
+        <ion-icon name="download-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Pagination (optional) -->
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button>1</ion-button>
+        <ion-button>2</ion-button>
+        <ion-button>3</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

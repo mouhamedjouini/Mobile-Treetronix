@@ -11,6 +11,24 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'list-rec',
+    loadChildren: () => import('./list-rec/list-rec.module').then( m => m.ListRecPageModule)
+  },
+  {
+    path: 'add-rec',
+    loadChildren: () => import('./add-rec/add-rec.module').then( m => m.AddRecPageModule)
+  },
+  
+ 
 ];
 
 @NgModule({

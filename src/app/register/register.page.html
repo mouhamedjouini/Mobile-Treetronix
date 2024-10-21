@@ -1,0 +1,94 @@
+<ion-content class="ion-padding">
+  <section class="login section">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+          <div class="form-head">
+            <h4 class="title ion-text-center">Inscription</h4>
+            <ion-avatar class="avatar">
+              <ion-icon name="person-add-outline" size="large"></ion-icon> <!-- Icône par défaut -->
+            </ion-avatar>
+            <form (ngSubmit)="register()" #registerForm="ngForm" novalidate>
+              
+              <!-- Username -->
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Nom d'utilisateur</ion-label>
+                <ion-icon slot="start" name="person-outline"></ion-icon>
+                <ion-input
+                  [(ngModel)]="user.username"
+                  name="username"
+                  type="text"
+                  required
+                  minlength="3"
+                  #username="ngModel"
+                  clearInput
+                  debounce="300">
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+                <small *ngIf="username.errors?.['required']">Le nom d'utilisateur est requis.</small>
+                <small *ngIf="username.errors?.['minlength']">Le nom d'utilisateur doit comporter au moins 3 caractères.</small>
+              </ion-text>
+
+              <!-- Email -->
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Email</ion-label>
+                <ion-icon slot="start" name="mail-outline"></ion-icon>
+                <ion-input
+                  [(ngModel)]="user.email"
+                  name="email"
+                  type="email"
+                  required
+                  #email="ngModel"
+                  clearInput
+                  debounce="300">
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                <small *ngIf="email.errors?.['required']">L'email est requis.</small>
+                <small *ngIf="email.errors?.['email']">Veuillez entrer un email valide.</small>
+              </ion-text>
+
+              <!-- Password -->
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Mot de passe</ion-label>
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-input
+                  [(ngModel)]="user.password"
+                  name="password"
+                  type="password"
+                  required
+                  minlength="6"
+                  #password="ngModel"
+                  clearInput
+                  debounce="300">
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <small *ngIf="password.errors?.['required']">Le mot de passe est requis.</small>
+                <small *ngIf="password.errors?.['minlength']">Le mot de passe doit comporter au moins 6 caractères.</small>
+              </ion-text>
+
+              <!-- Submit Button -->
+              <ion-button expand="block" type="submit" color="primary" shape="round" class="ion-margin-top" [disabled]="registerForm.invalid">
+                <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+                <span *ngIf="!isLoading">S'inscrire</span>
+              </ion-button>
+
+              <!-- Error Message -->
+              <ion-text color="danger" *ngIf="isRegisterFailed">
+                <small>{{ errorMessage }}</small>
+              </ion-text>
+
+              <br>
+              <p class="ion-text-center router-link ion-margin-top">
+                Vous avez déjà un compte ?
+                <a routerLink="/login">Connectez-vous ici</a>
+              </p>
+            </form>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>

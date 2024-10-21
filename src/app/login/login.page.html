@@ -1,0 +1,77 @@
+
+
+<ion-content class="ion-padding">
+  <section class="login section">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+          <div class="form-head">
+            <h4 class="title ion-text-center">Connexion</h4>
+            <ion-avatar class="avatar">
+              <ion-icon name="person-circle-outline" size="large"></ion-icon> <!-- Icône par défaut -->
+            </ion-avatar>
+            <form (ngSubmit)="login()" #loginForm="ngForm" novalidate>
+              
+              <!-- Username or Email -->
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Nom d'utilisateur</ion-label>
+                <ion-icon slot="start" name="person-outline"></ion-icon>
+                <ion-input
+                  [(ngModel)]="user.username"
+                  name="username"
+                  type="text"
+                  required
+                  minlength="3"
+                  #username="ngModel"
+                  clearInput
+                  debounce="300">
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+                <small *ngIf="username.errors?.['required']">Le nom d'utilisateur est requis.</small>
+                <small *ngIf="username.errors?.['minlength']">Le nom d'utilisateur doit comporter au moins 3 caractères.</small>
+              </ion-text>
+
+              <!-- Password -->
+              <ion-item class="ion-margin-bottom">
+                <ion-label position="floating">Mot de passe</ion-label>
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-input
+                  [(ngModel)]="user.password"
+                  name="password"
+                  type="password"
+                  required
+                  minlength="6"
+                  #password="ngModel"
+                  clearInput
+                  debounce="300">
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <small *ngIf="password.errors?.['required']">Le mot de passe est requis.</small>
+                <small *ngIf="password.errors?.['minlength']">Le mot de passe doit comporter au moins 6 caractères.</small>
+              </ion-text>
+
+              <!-- Submit Button -->
+              <ion-button expand="block" type="submit" color="primary" shape="round" class="ion-margin-top" [disabled]="loginForm.invalid">
+                <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+                <span *ngIf="!isLoading">Connexion</span>
+              </ion-button>
+
+              <!-- Error Message -->
+              <ion-text color="danger" *ngIf="isLoginFailed">
+                <small>{{ errorMessage }}</small>
+              </ion-text>
+
+              <br>
+              <p class="ion-text-center router-link ion-margin-top">
+                Vous n'avez pas de compte ?
+                <a routerLink="/register">Inscrivez-vous ici</a>
+              </p>
+            </form>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>
