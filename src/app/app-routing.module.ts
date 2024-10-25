@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'add-rec',
     loadChildren: () => import('./add-rec/add-rec.module').then( m => m.AddRecPageModule)
   },
+  {
+    path: 'details-rec/:id',
+    loadChildren: () => import('./details-rec/details-rec.module').then( m => m.DetailsRecPageModule)
+  },
   
  
 ];

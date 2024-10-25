@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">Suivi Réclamation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- En-tête de la page -->
+  <ion-row class="ion-justify-content-between ion-align-items-center">
+    <ion-col size="8">
+      <h2 class="ion-text-wrap">Suivi de votre réclamation</h2>
+    </ion-col>
+    <ion-col size="4" class="ion-text-right">
+      <img src="https://lycee.stemariebeaucamps.fr/sites/default/files/2022-12/forum.jpeg" alt="Forum" class="rounded-circle" style="width: 100px; height: auto;">
+    </ion-col>
+  </ion-row>
+
+  <ion-card class="ion-margin-top">
+    <!-- En-tête de la question -->
+    <ion-item lines="full">
+      <ion-avatar slot="start">
+        <img src="https://via.placeholder.com/40" alt="Image de l'utilisateur">
+      </ion-avatar>
+      <ion-label>
+        <h2 class="ion-text-wrap">{{ form.user.username }}</h2>
+        <p class="ion-text-wrap">Posté le {{ form.Date | date:'dd MMMM yyyy' }}</p>
+      </ion-label>
+    </ion-item>
+
+    <!-- Corps de la réclamation -->
+    <ion-card-content>
+      <h6>{{ form.name }}</h6>
+      <p>{{ form.description }}</p>
+      <ion-text color="medium" class="ion-margin-bottom">Type : {{ form.typereclamation }}</ion-text><br>
+      <ion-badge color="tertiary">{{ form.status }}</ion-badge>
+      
+      <!-- Affichage des pièces jointes -->
+      <div *ngIf="form.piecejointe && form.piecejointe.length > 0" class="ion-margin-top">
+        <ion-text color="medium">Pièces jointes :</ion-text>
+        <ul>
+          <li>
+            <ion-icon name="attach-outline" color="dark"></ion-icon>
+            <a [href]="'http://localhost:5000/getimage/' + form.piecejointe" target="_blank">{{ form.piecejointe }}</a>
+          </li>
+        </ul>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Réponses -->
+  <ion-card>
+    <ion-item lines="full">
+      <ion-label>
+        <ion-icon name="chatbubbles-outline" slot="start" color="primary"></ion-icon>
+        {{ commst.length }} Réponses
+      </ion-label>
+    </ion-item>
+
+    <ion-list>
+      <ion-item *ngFor="let reponse of commst" lines="inset">
+        <ion-avatar slot="start">
+          <img src="https://via.placeholder.com/32" alt="Image de l'utilisateur">
+        </ion-avatar>
+        <ion-label>
+          <h6>{{ reponse.user.username }}</h6>
+          <p>{{ reponse.description }}</p>
+          <ion-text color="medium">{{ reponse.Date | date:'dd MMMM yyyy' }}</ion-text>
+          
+          <!-- Affichage des pièces jointes de la réponse -->
+          <div *ngIf="reponse.piecejointe && reponse.piecejointe.length > 0" class="ion-margin-top">
+            <ion-icon name="attach-outline" color="dark"></ion-icon>
+            <a [href]="'http://localhost:5000/getimage/' + reponse.piecejointe" target="_blank">{{ reponse.piecejointe }}</a>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <!-- Ajouter une réponse -->
+  <ion-card class="ion-padding" *ngIf="form.status !== 'RESOLVED'">
+    <ion-item lines="none">
+      <ion-input [(ngModel)]="comms.description" placeholder="Écrire un commentaire" clearInput></ion-input>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" >
+          <ion-icon name="send-outline" color="primary"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-card>
+</ion-content>
